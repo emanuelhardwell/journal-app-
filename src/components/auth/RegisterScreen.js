@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import validator from "validator";
+import { starRegisterEmailPasswordName } from "../../actions/auth";
 import { removeError, setError } from "../../actions/ui";
 
 import { useForm } from "../../hooks/useForm";
@@ -26,6 +27,7 @@ export const RegisterScreen = () => {
 
     if (isFormValid()) {
       console.log("Formulario correcto");
+      dispatch(starRegisterEmailPasswordName(email, password, name));
     }
   };
 

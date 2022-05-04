@@ -3,9 +3,23 @@ import { types } from "../types/types";
 
 export const starLoginEmailPassword = (email, password) => {
   return (dispatch) => {
-    setTimeout(() => {
-      dispatch(login("9873", "hardwell"));
-    }, 3000);
+    dispatch(login("9873", "hardwell"));
+  };
+};
+
+export const starRegisterEmailPasswordName = (email, password, name) => {
+  return (dispatch) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(async ({ user }) => {
+        // console.log(user);
+        await user.updateProfile({ displayName: name });
+        dispatch(login(user.uid, user.displayName));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 
