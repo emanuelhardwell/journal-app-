@@ -3,7 +3,16 @@ import { types } from "../types/types";
 
 export const starLoginEmailPassword = (email, password) => {
   return (dispatch) => {
-    dispatch(login("9873", "hardwell"));
+    // dispatch(login("9873", "hardwell"));
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(({ user }) => {
+        dispatch(login(user.uid, user.displayName));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };
 
