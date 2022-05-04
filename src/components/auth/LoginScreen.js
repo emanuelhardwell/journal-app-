@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { login } from "../../actions/auth";
+import { starLoginEmailPassword } from "../../actions/auth";
 import { useForm } from "../../hooks/useForm";
 
 export const LoginScreen = () => {
@@ -17,7 +17,8 @@ export const LoginScreen = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     // console.log(email, password);
-    dispatch(login("1233444", "Emanuel"));
+    // dispatch(login("1233444", "Emanuel"));
+    dispatch(starLoginEmailPassword(email, password));
   };
 
   // RETURN
