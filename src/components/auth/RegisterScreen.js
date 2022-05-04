@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import validator from "validator";
@@ -17,6 +18,7 @@ export const RegisterScreen = () => {
   const { name, email, password, password2 } = formValues;
 
   const dispatch = useDispatch();
+  const { msgError } = useSelector((state) => state.ui);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -29,17 +31,12 @@ export const RegisterScreen = () => {
 
   const isFormValid = () => {
     if (name.trim().length === 0) {
-      console.log("Ingresa un nombre");
       dispatch(setError("Ingresa un nombre"));
       return false;
     } else if (!validator.isEmail(email)) {
-      console.log("Email invalido");
       dispatch(setError("Email invalido"));
       return false;
     } else if (password !== password2 || password.length < 5) {
-      console.log(
-        "Las contraseñas deben ser iguales y debe de tener mas de 5 caracteres"
-      );
       dispatch(
         setError(
           "Las contraseñas deben ser iguales y debe de tener mas de 5 caracteres"
@@ -56,7 +53,7 @@ export const RegisterScreen = () => {
     <>
       <h3 className="auth__title">Register</h3>
 
-      <div className="auth__alert-error">Hola mundo</div>
+      {msgError && <div className="auth__alert-error"> {msgError} </div>}
 
       <form onSubmit={handleRegister}>
         <input
