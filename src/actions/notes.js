@@ -1,21 +1,27 @@
 import { db } from "../firebase/firebaseConfig";
+import { types } from "../types/types";
 
 export const startAddNote = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const uid = getState().auth.uid;
-    const ejemplo = {
-      title: "titulo",
-      body: "descripcion",
+    const newNote = {
+      title: "",
+      body: "",
       date: new Date().getTime(),
     };
     // console.log(getState());
-    db.collection(`${uid}/journal/notes/`)
-      .add(ejemplo)
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const doc = await db.collection(`${uid}/journal/notes/`).add(newNote);
+    console.log(doc);
+    dispatch(activeNote(doc.id, newNote));
+  };
+};
+
+export const activeNote = (id, note) => {
+  return {
+    type: types.notesActive,
+    payload: {
+      id,
+      ...note,
+    },
   };
 };
