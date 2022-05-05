@@ -7,4 +7,12 @@ export const types = {
 
   uiStartLoading: "[UI] start loading",
   uiFinishLoading: "[UI] finish loading",
+
+  notesAdd: "[Notes] add",
+  notesUpdate: "[Notes] update",
+  notesDelete: "[Notes] delete",
+  notesLoad: "[Notes] load",
+  notesActive: "[Notes] active",
+  notesFileUrl: "[Notes] file url",
+  notesLogoutCleaning: "[Notes] log out cleaning",
 };
