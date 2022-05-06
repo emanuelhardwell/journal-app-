@@ -10,8 +10,8 @@ import { login } from "../actions/auth";
 import { Loading } from "../components/loading/Loading";
 import { PublicRouter } from "./PublicRouter";
 import { PrivateRouter } from "./PrivateRouter";
-import { loadNotes } from "../helpers/loadNotes";
-import { SetNotes } from "../actions/notes";
+
+import { startLoadingNotes } from "../actions/notes";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -24,9 +24,7 @@ export const AppRouter = () => {
         dispatch(login(user.uid, user.displayName));
         setIsLoggedIn(true);
 
-        const notes = await loadNotes(user.uid);
-        // console.log(notes);
-        dispatch(SetNotes(notes));
+        dispatch(startLoadingNotes(user.uid));
       } else {
         console.log("No existe un usuario logeado actualmente");
         setIsLoggedIn(false);
