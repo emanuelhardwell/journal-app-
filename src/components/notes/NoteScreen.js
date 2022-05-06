@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import { NotesAppBar } from "./NotesAppBar";
@@ -6,8 +6,17 @@ import { NotesAppBar } from "./NotesAppBar";
 export const NoteScreen = () => {
   const note = useSelector((state) => state.notes.active);
 
-  const [formValues, handleInputChange] = useForm(note);
+  const [formValues, handleInputChange, reset] = useForm(note);
   const { title, body } = formValues;
+
+  const activeIdRef = useRef(note.id);
+
+  useEffect(() => {
+    if (note.id !== activeIdRef.current) {
+      reset(note);
+      activeIdRef.current = note.id;
+    }
+  }, [note, reset]);
 
   return (
     <div className="notes__main-content">
@@ -30,7 +39,7 @@ export const NoteScreen = () => {
           onChange={handleInputChange}
         ></textarea>
 
-        {formValues.url && (
+        {note.url && (
           <div className="notes__image">
             <img
               src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
